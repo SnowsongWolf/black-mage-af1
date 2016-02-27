@@ -1,0 +1,19 @@
+Ways to detect a flickering color
+
+short[3] {redcol, greencol, bluecol}
+
+boolean[3] {red, green, blue}
+byte halfpow {0b0_red_green_blue}
+
+If the hat is going to run off of a single color, we can simply:
+
+#define COL_NON -1
+#define COL_RED 0
+#define COL_GRN 1
+#define COL_BLU 2
+
+int half_color = COL_NON;  // set to which color should be half power
+
+Update will take the form of (int mode, int level) where mode is the current mode (none, astral, umbral, maybe limit break) and level is the number of chasing lights (1-3).
+
+Changes to mode and level happen upon final cast of a spell.
