@@ -14,6 +14,7 @@ If the hat is going to run off of a single color, we can simply:
 
 int half_color = COL_NON;  // set to which color should be half power
 
-Update will take the form of (int mode, int level) where mode is the current mode (none, astral, umbral, maybe limit break) and level is the number of chasing lights (1-3).
+Update will take the form of (int mode, int level) where mode is the current mode
+  (none, astral, umbral, maybe limit break) and level is the number of chasing lights (1-3).
 
 Changes to mode and level happen upon final cast of a spell.
