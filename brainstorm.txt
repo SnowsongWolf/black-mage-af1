@@ -1,20 +1,64 @@
-Ways to detect a flickering color
+Light engine complete, just requiring finalized animation sequences.
+ - Like the idea of making the cast effect reflect the spell.
 
-short[3] {redcol, greencol, bluecol}
-
-boolean[3] {red, green, blue}
-byte halfpow {0b0_red_green_blue}
-
-If the hat is going to run off of a single color, we can simply:
-
-#define COL_NON -1
-#define COL_RED 0
-#define COL_GRN 1
-#define COL_BLU 2
-
-int half_color = COL_NON;  // set to which color should be half power
-
-Update will take the form of (int mode, int level) where mode is the current mode
-  (none, astral, umbral, maybe limit break) and level is the number of chasing lights (1-3).
-
-Changes to mode and level happen upon final cast of a spell.
+Control engine:
+  - Button based input
+    - Hall effect?
+    - Micro switch if not.
+  - Haptic based feedback
+    - Motor appears to run best at 3.3V, can drive from Arduino.
+    - Can I use an output pin set to high/low to sink the current?
+    - Use transistor if not.
+  
+  Basic flow:
+  
+  init()
+  {
+    set up inputs and outputs
+    set up wireless communication
+    set up initial system state (off)
+    set up initial queued action (none)
+    set up initial next action (none)
+  }
+  
+  main()
+  {
+    check for button input
+    if (button input)
+    {
+      if (queued action button)
+      {
+        queue action in variable
+        send haptic pulse
+      }else if (action button)
+      {
+        if (queued action)
+        {
+          run queued action
+        }else
+        {
+          run default action based on state (ignite or extinguish)
+        }
+        send haptic pulse
+      }else if (clear button)
+      {
+        clear queued action
+        set animation back to idle?  (unless off)
+      }
+    }
+    if (state change)
+    {
+      send wireless update
+      update native display (if any)
+    }
+  }
+  
+  States:
+    state_off
+    state_idle
+    state_cast (lasts until activation button released, then goes to spell)
+    state_bigcast (lasts until activation button released, then goes to bigspell)
+    state_spell
+    state_bigspell
+    state_limitcast (lasts until activation button released, then goes to limitspell)
+    state_limitspell
